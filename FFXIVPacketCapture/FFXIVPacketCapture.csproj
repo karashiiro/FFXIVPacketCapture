@@ -13,6 +13,8 @@
     <RepositoryUrl>https://github.com/karashiiro/FFXIVPacketCapture</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ffxiv;packet;capture;scanner</PackageTags>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

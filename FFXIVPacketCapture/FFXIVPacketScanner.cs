@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using FFXIVPacketCapture.Packets;
 using PacketDotNet;
 using SharpPcap;
 using SharpPcap.LibPcap;

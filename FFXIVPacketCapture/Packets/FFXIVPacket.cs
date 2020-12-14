@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FFXIVPacketCapture
+namespace FFXIVPacketCapture.Packets
 {
     public class FFXIVPacket
     {

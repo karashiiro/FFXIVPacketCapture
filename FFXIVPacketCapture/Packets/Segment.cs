@@ -1,4 +1,4 @@
-﻿namespace FFXIVPacketCapture
+﻿namespace FFXIVPacketCapture.Packets
 {
     public class Segment
     {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace FFXIVPacketCapture
+namespace FFXIVPacketCapture.Packets
 {
     [StructLayout(LayoutKind.Sequential)]
     public class SegmentHeader
