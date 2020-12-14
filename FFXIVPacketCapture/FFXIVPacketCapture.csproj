@@ -1,8 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>9.0</LangVersion>
+    <Authors>karashiiro</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>A packet scanner for FFXIV.</Description>
+    <Copyright>karashiiro 2020</Copyright>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/karashiiro/FFXIVPacketCapture</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/karashiiro/FFXIVPacketCapture</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ffxiv;packet;capture;scanner</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -16,6 +26,13 @@
   <ItemGroup>
     <PackageReference Include="PacketDotNet" Version="1.1.2" />
     <PackageReference Include="SharpPcap" Version="5.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
