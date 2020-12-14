@@ -18,11 +18,15 @@ namespace FFXIVPacketCapture
         private const ulong Magic1 = 16304822851840528978;
         private const ulong Magic2 = 8486076352731294335;
 
+        private readonly Mode _mode;
         private ICaptureDevice _device;
 
         public PacketReceived OnPacketReceived { get; set; }
         public IpcMessageReceived OnIpcMessageReceived { get; set; }
 
+        /// <summary>
+        /// Creates a new packet scanner on the first network device available.
+        /// </summary>
         public FFXIVPacketScanner()
         {
             var devices = CaptureDeviceList.Instance;
@@ -32,15 +36,35 @@ namespace FFXIVPacketCapture
             }
 
             _device = devices[0];
+            _mode = Mode.Live;
         }
 
-        public void Start()
+        /// <summary>
+        /// Creates a new packet scanner on the specified capture file.
+        /// </summary>
+        /// <param name="captureFileName">The pcap capture file.</param>
+        public FFXIVPacketScanner(string captureFileName)
+        {
+            _device = new CaptureFileReaderDevice(captureFileName);
+            _mode = Mode.File;
+        }
+
+        public void Start(string captureFileName = null)
         {
             _device.OnPacketArrival += DeviceOnPacketArrival;
-            if (_device is NpcapDevice nPCap)
+            if (!string.IsNullOrEmpty(captureFileName))
+            {
+                var captureWriter = new CaptureFileWriterDevice(captureFileName);
+                _device.OnPacketArrival += (sender, args) => captureWriter.Write(args.Packet);
+            }
+
+            if (_mode == Mode.File)
+                _device.Open();
+            else if (_device is NpcapDevice nPCap)
                 nPCap.Open(OpenFlags.DataTransferUdp | OpenFlags.NoCaptureLocal | OpenFlags.MaxResponsiveness, 1000);
-            else if (_device is LibPcapLiveDevice livePCapDevice)
-                livePCapDevice.Open(DeviceMode.Promiscuous, 1000);
+            else
+                _device.Open(DeviceMode.Promiscuous, 1000);
+
             _device.Filter = Filter;
             _device.StartCapture();
         }
@@ -125,5 +149,11 @@ namespace FFXIVPacketCapture
         private static bool IsMagical(PacketHeader header)
             => header.Magic1 == Magic1 && header.Magic2 == Magic2 ||
                header.Magic1 + header.Magic2 == 0;
+
+        private enum Mode
+        {
+            Live,
+            File,
+        }
     }
 }
